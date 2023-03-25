@@ -40,13 +40,21 @@ model = LinearRegressionTorch(input_size=input_dim, output_size=output_dim)
 loss_fun = nn.MSELoss()
 
 #%% Optimizer
-LR = 0.02
+############## PLAY WITHT THIS PARAMETER VALUE ################
+# early just ordes of magnitude too large or too small
 # test different values of too large 0.1 and too small 0.001
 # best 0.02
+LR = 0.02
+
 optimizer = torch.optim.SGD(model.parameters(), lr=LR)
 
 #%% perform training
+#### COLLECTER TRAINING PARAMETERS
 losses, slope, bias = [], [], []
+
+
+############## PLAY WITHT THIS PARAMETER VALUE ################
+# grow it as long as loss function keesp droping a significant amount
 NUM_EPOCHS = 1000
 for epoch in range(NUM_EPOCHS):
     
@@ -88,6 +96,6 @@ sns.lineplot(x=range(NUM_EPOCHS), y=slope)
 
 # %% check the result
 y_pred = model(X).data.numpy().reshape(-1)
-sns.scatterplot(x=X_list, y=y_list)
-sns.lineplot(x=X_list, y=y_pred, color='red')
+sns.scatterplot(x=X_list, y=y_list) # true data
+sns.lineplot(x=X_list, y=y_pred, color='red') # predicted data
 # %%

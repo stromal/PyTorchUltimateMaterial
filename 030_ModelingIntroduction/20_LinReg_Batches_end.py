@@ -41,26 +41,33 @@ model.train()
 loss_fun = nn.MSELoss()
 
 #%% Optimizer
+#### previously expereimneted by hand tuned
 learning_rate = 0.02
 # test different values of too large 0.1 and too small 0.001
 # best 0.02
 optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
 
 #%% perform training
+#### colelct rtraining perameter here
 losses = []
 slope, bias = [], []
+
+########### FOR CYCLE OTIM Ethese 2 parameters
 NUM_EPOCHS = 1000
-BATCH_SIZE = 2
+BATCH_SIZE = 2 # slice our total dataset to multiple smaller ones it is less processing intense, good starter 32
+
+################## TRAIN ############################
 for epoch in range(NUM_EPOCHS):
+    ##### batch size grows
     for i in range(0, X.shape[0], BATCH_SIZE):
         # optimization
         optimizer.zero_grad()
 
         # forward pass
-        y_pred = model(X[i:i+BATCH_SIZE])
+        y_pred = model(X[i:i+BATCH_SIZE])  ##### batch size grows!
 
         # compute loss
-        loss = loss_fun(y_pred, y_true[i:i+BATCH_SIZE])
+        loss = loss_fun(y_pred, y_true[i:i+BATCH_SIZE])  ##### batch size grows!
         losses.append(loss.item())
 
         # backprop
